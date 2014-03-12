@@ -1,6 +1,6 @@
 package net.stawrul.notes.view;
 
-;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -18,12 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import net.stawrul.notes.R;
 import net.stawrul.notes.business.NotesController;
-import net.stawrul.notes.model.Category;
 import net.stawrul.notes.view.adapters.ItemWithIconAdapter;
 
 /**

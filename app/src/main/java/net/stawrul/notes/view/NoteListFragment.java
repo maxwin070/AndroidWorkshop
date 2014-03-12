@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import net.stawrul.notes.R;
 import net.stawrul.notes.business.NotesController;
 import net.stawrul.notes.model.Note;
-import net.stawrul.notes.view.dummy.DummyContent;
+import net.stawrul.notes.view.adapters.NoteListItemAdapter;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import java.util.List;
  * A fragment representing a list of Items.
  * <p />
  * <p />
- * Activities containing this fragment MUST implement the {@link Callbacks}
+ * Activities containing this fragment MUST implement the {/@link Callbacks}
  * interface.
  */
 public class NoteListFragment extends ListFragment {
@@ -54,9 +54,12 @@ public class NoteListFragment extends ListFragment {
 
         notesController = new NotesController();
         List<Note> notes = notesController.getCategories().get(categoryId).getNotes();
-
+        /*
         setListAdapter(new ArrayAdapter<Note>(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, notes));
+                */
+        setListAdapter(new NoteListItemAdapter(getActivity(),
+                R.layout.list_item_with_icon, notes));
     }
 
 
