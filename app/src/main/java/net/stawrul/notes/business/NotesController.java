@@ -1,5 +1,6 @@
 package net.stawrul.notes.business;
 
+import android.database.sqlite.SQLiteDatabase;
 import net.stawrul.notes.R;
 import net.stawrul.notes.model.Category;
 import net.stawrul.notes.model.Note;
@@ -22,7 +23,7 @@ public class NotesController {
         notesCategory.addNote(note);
         note = new Note(1, "Druga notatka", "Inna notatka", new Date(), false);
         notesCategory.addNote(note);
-        note = new Note(2, "Pierwsze", "Jeszcze inna tresc", new Date(), false);
+        note = new Note(2, "Trzecia", "Jeszcze inna tresc", new Date(), false);
         notesCategory.addNote(note);
 
         categories.add(notesCategory);
@@ -46,6 +47,34 @@ public class NotesController {
     }
 
     public List<Category> getCategories() {
+        SQLiteDatabase db = DBHelper.instance().getReadableDatabase();
         return categories;
+    }
+
+    public void addCategory(String categoryName) {
+        Category category = new Category(categories.size(), categoryName, Category.Type.USER_DEFINE, 0);
+        categories.add(category);
+    }
+
+    public void deleteCategory(Category category) {
+        categories.remove(category);
+    }
+
+    public Category findCategoryById(int categoryId) {
+        return categories.get(categoryId);
+    }
+
+    public void saveCategory(Category category) {
+        //UPDATE
+    }
+
+    public void toggleStar(Note note) {
+        note.setStarred(!note.isStarred());
+
+        if (note.isStarred()) {
+            categories.get(1).addNote(note);
+        } else {
+            categories.get(1).getNotes().remove(note);
+        }
     }
 }
