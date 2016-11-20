@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.*;
 import android.widget.*;
 import net.stawrul.notes.R;
+import net.stawrul.notes.business.GetCategoriesService;
 import net.stawrul.notes.business.NotesController;
 import net.stawrul.notes.model.Category;
 
@@ -20,12 +21,13 @@ public class CategoriesActivity extends ListActivity {
 
     private ArrayAdapter<Category> adapter;
     private int selectedPosition;
+    private NotesController notesController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final NotesController notesController = new NotesController();
+        notesController = new NotesController();
 
         final ListView listView = getListView();
         adapter = new ArrayAdapter<Category>(this, android.R.layout.simple_list_item_activated_1,
@@ -110,6 +112,9 @@ public class CategoriesActivity extends ListActivity {
                 selectedPosition = position;
             }
         });
+
+        Intent intent = new Intent(this, GetCategoriesService.class);
+        this.startService(intent);
     }
 
     @Override
@@ -133,6 +138,9 @@ public class CategoriesActivity extends ListActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.notifyDataSetChanged();
+
+        adapter.clear();
+        adapter.addAll(notesController.getCategories());
+//        adapter.notifyDataSetChanged();
     }
 }
